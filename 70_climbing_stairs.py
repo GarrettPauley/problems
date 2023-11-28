@@ -45,8 +45,22 @@ def climbStairs(n):
     return climbed[n]
 
 
-print(climbStairs(2)) # 2
-print(climbStairs(3)) # 3
-print(climbStairs(1)) # 1
+def climbStairs_tabulation( n: int) -> int:
+    if n == 0 or n == 1:
+        return 1
+
+    dp = [0] * (n+1)
+    dp[0] = dp[1] = 1
+    for i in range(2, n+1):
+        dp[i] = dp[i-1] + dp[i-2]
+    print(dp)
+    return dp[n]
+
+#print(climbStairs(2)) # 2
+#print(climbStairs(3)) # 3
+#print(climbStairs(1)) # 1
+
+print(climbStairs_tabulation(10))
+
 
 
