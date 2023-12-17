@@ -19,6 +19,18 @@ class ListNode:
             return newNode
         newNode.next = head
         return newNode
+    
+    def hasLoop(self, head): 
+        slow = head
+        fast = head
+
+        while fast and fast.next: # even nodes: fast.next will be null. Odd nodes: fast will be null.
+            slow = slow.next
+            fast = fast.next.next
+            if slow == fast: 
+                return True
+        return False
+
 
 
     def deleteNode(self,head, val_to_delete: int): 
@@ -47,11 +59,16 @@ class ListNode:
     def __str__(self) -> str:
         node_vals = []
         n = self
+        if self.hasLoop(n): 
+            return "has loop"
+            # while n not in node_vals: 
+                # node_vals.append(str(n.val))
+                # n = n.next
+            # return ' -> '.join(node_vals)
         while n: 
             node_vals.append(str(n.val))
             n = n.next
         return ' -> '.join(node_vals)
-
 
 def printLL(head) -> str:
     node_vals = []

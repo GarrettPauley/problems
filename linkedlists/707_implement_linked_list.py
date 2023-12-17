@@ -47,6 +47,7 @@ class MyLinkedList:
     def addAtHead(self, val: int) -> None:
         if self.head == None or self.head.val == None: 
             self.head = Node(val)
+            return
         new = Node(val)
         new.next = self.head
         self.head = new
@@ -55,6 +56,7 @@ class MyLinkedList:
     def addAtTail(self, val: int) -> None:
         if self.head == None or self.head.val == None: 
             self.head =  Node(val)
+            return
         node = Node(val)
         temp = self.head
         while temp.next: 
@@ -64,6 +66,9 @@ class MyLinkedList:
 
         
     def addAtIndex(self, index: int, val: int) -> None:
+        if index == 0: 
+            self.addAtHead(val)
+            return
         count = 0
         new_node = Node(val)
         temp = self.head
@@ -81,7 +86,7 @@ class MyLinkedList:
             self.head = self.head.next
 
         temp = self.head
-        while temp: 
+        while temp and temp.next: 
             if count == index - 1: 
                 temp.next = temp.next.next
             temp = temp.next
@@ -93,7 +98,7 @@ class MyLinkedList:
         count = 0
         n = self.head
         while n: 
-            node_vals.append(str(n.val) + f" index: {count}")
+            node_vals.append(str(n.val) + f"({count})")
             n = n.next
             count += 1
         return ' -> '.join(node_vals)
@@ -170,12 +175,61 @@ class TestLinkedList(unittest.TestCase):
         actual = testList.get(1) # value of head node
         self.assertEqual(actual, expected)
     # TEST DELETE AT INDEX
-    def testAddAtIndex(self): 
+    def testDeleteAtIndex(self): 
         testList = MyLinkedList(Node(1, Node(2, Node(3, Node(4)))))  
-        expected = 2
-        testList.deleteAtIndex(0)
-        actual = testList.get(0) # value of head node
+        expected = 3
+        testList.deleteAtIndex(1)
+        actual = testList.get(1) # value of head node
         self.assertEqual(actual, expected)
+    # LeetCode Tests
+    def testCase1(self): 
+        testList = MyLinkedList(None)  
+        testList.addAtHead(1)
+        print(testList)
+        testList.addAtTail(3)
+        print(testList)
+        testList.addAtIndex(1, 2)
+        print(testList)
+        result1 = testList.get(1)
+        self.assertEqual(result1, 2)
+        testList.deleteAtIndex(1)
+        result2 = testList.get(1)
+        self.assertEqual(result2, 3)
+    
+    def testCase2(self): 
+        testList = MyLinkedList(None)
+        testList.addAtIndex(0, 10)
+        testList.addAtIndex(0, 20)
+        testList.addAtIndex(1, 30)
+        result = testList.get(0)
+        self.assertEqual(result, 20)
+
+    def testCase3(self): 
+        testList = MyLinkedList(None)
+        testList.addAtHead(7)
+        testList.addAtHead(2)
+        testList.addAtHead(1)
+        testList.addAtIndex(3, 0)
+        testList.deleteAtIndex(2)
+        testList.addAtHead(6)
+        testList.addAtTail(4)
+        result = testList.get(4)
+        self.assertEqual(result,4)
+        testList.addAtHead(4)
+        testList.addAtIndex(5,0)
+        testList.addAtHead(6)
+
+    def testCase4(self): 
+        testList = MyLinkedList(None)
+        testList.addAtTail(1)
+        testList.addAtTail(3)
+        print(testList)
+        result = testList.get(1)
+        self.assertEqual(result, 3)
+
+
+
+
  
 
 # testList = MyLinkedList(1, MyLinkedList(2, MyLinkedList(3, MyLinkedList(4))))

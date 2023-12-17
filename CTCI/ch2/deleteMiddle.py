@@ -43,8 +43,7 @@ def deleteMiddleBigBrain(head) -> ListNode:
     if not head or not head.next: #Null head or only one element: 
         return None
     
-    # Otherwise, find the middle node and delete it
-    while fast and fast.next: 
+    while fast and fast.next: # even number of nodes, fast.next will be Null. Odd number, fast will be null 
         fast = fast.next.next
         slow = slow.next
     # Delete the middle
